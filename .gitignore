@@ -1,0 +1,7 @@
+
+.*project
+.settings/
+Thumbs.db
+mkpyqt.py
+*.pyc
+*.db
