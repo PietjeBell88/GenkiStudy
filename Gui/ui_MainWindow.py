@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '.\MainWindow.ui'
 #
-# Created: Sat Mar 27 18:53:21 2010
+# Created: Sun Mar 28 18:08:29 2010
 #      by: PyQt4 UI code generator 4.7
 #
 # WARNING! All changes made in this file will be lost!
@@ -49,6 +49,11 @@ class Ui_MainWindow(object):
         self.qa_layout = QtGui.QVBoxLayout(self.layoutWidget)
         self.qa_layout.setObjectName("qa_layout")
         self.question_textbrowser = QtGui.QTextBrowser(self.layoutWidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.question_textbrowser.sizePolicy().hasHeightForWidth())
+        self.question_textbrowser.setSizePolicy(sizePolicy)
         self.question_textbrowser.setFocusPolicy(QtCore.Qt.NoFocus)
         self.question_textbrowser.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.question_textbrowser.setObjectName("question_textbrowser")
@@ -152,9 +157,12 @@ class Ui_MainWindow(object):
         self.actionVocabulary_2.setCheckable(True)
         self.actionVocabulary_2.setChecked(True)
         self.actionVocabulary_2.setObjectName("actionVocabulary_2")
+        self.actionDatabase = QtGui.QAction(MainWindow)
+        self.actionDatabase.setObjectName("actionDatabase")
         self.menuFile.addAction(self.actionSwitchUserLanguage)
         self.menuFile.addAction(self.actionExit)
         self.menuOptions.addAction(self.actionProgress)
+        self.menuOptions.addAction(self.actionDatabase)
         self.menuOptions.addAction(self.actionOptions)
         self.menuHelp.addAction(self.actionHelp)
         self.menuHelp.addAction(self.actionAbout)
@@ -205,4 +213,5 @@ class Ui_MainWindow(object):
         self.actionType.setText(QtGui.QApplication.translate("MainWindow", "Type", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLanguage_2.setText(QtGui.QApplication.translate("MainWindow", "Language", None, QtGui.QApplication.UnicodeUTF8))
         self.actionVocabulary_2.setText(QtGui.QApplication.translate("MainWindow", "Vocabulary", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDatabase.setText(QtGui.QApplication.translate("MainWindow", "Database", None, QtGui.QApplication.UnicodeUTF8))
 

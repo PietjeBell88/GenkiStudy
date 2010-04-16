@@ -64,6 +64,12 @@
        <layout class="QVBoxLayout" name="qa_layout">
         <item>
          <widget class="QTextBrowser" name="question_textbrowser">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>
@@ -233,6 +239,7 @@ p, li { white-space: pre-wrap; }
      <string>Options</string>
     </property>
     <addaction name="actionProgress"/>
+    <addaction name="actionDatabase"/>
     <addaction name="actionOptions"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -340,6 +347,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Vocabulary</string>
+   </property>
+  </action>
+  <action name="actionDatabase">
+   <property name="text">
+    <string>Database</string>
    </property>
   </action>
  </widget>

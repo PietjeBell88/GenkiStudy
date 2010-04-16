@@ -60,7 +60,7 @@ class MainWindow(QMainWindow, ui_MainWindow.Ui_MainWindow):
     @pyqtSignature("")
     def on_actionAbout_triggered(self):
         QMessageBox.about(self, "About GenkiStudy",
-                """<b>GenkiStudy</b> v %s
+                """<b>GenkiStudy</b> v%s
                 <p>Copyright &copy; 2010 Pietje Bell. 
                 All rights reserved.
                 <p>This application helps you slack.
@@ -78,6 +78,11 @@ class MainWindow(QMainWindow, ui_MainWindow.Ui_MainWindow):
         dlg = ProgressDialog(self)
         dlg.exec_()
 
+    @pyqtSignature("")
+    def on_actionDatabase_triggered(self):
+        dlg = DatabaseDlg(self.language.database, self)
+        dlg.exec_()
+        
     @pyqtSignature("")    
     def on_actionSwitchUserLanguage_triggered(self):
         userlanguagedialog = UserLanguageDialog(self.settings, self.users, self)
@@ -90,6 +95,7 @@ class MainWindow(QMainWindow, ui_MainWindow.Ui_MainWindow):
 
     def change_rehearse(self):
         pass
+
 
 def main():
     users = ["Pietje"]

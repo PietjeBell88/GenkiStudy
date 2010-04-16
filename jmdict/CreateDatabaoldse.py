@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 import itertools
 import codecs
@@ -29,7 +30,7 @@ class List:
                 self.parseConfigLine(line)
                 continue
             elif "" not in self.config.values():
-                self.lines.append(Line(self.config.copy(), line))
+                self.lines.append(Line(self.config, line))
             else:
                 print "...." + line
                 print "wanted to add something, but not all config values were set"
@@ -64,19 +65,22 @@ class Line:
             req_where = " AND ".join([x + " = ?" for x in columns])
             
             sql = "SELECT rowid FROM " + self.config["ltype"] + " WHERE " + req_where + ";"
+            print sql, subentry
             c.execute(sql, subentry)
             
             results = c.fetchall()
+            print results
             n = len(results)
             # If somehow the amount of rows returned was -1, or there were multiple hits
             # which should be impossible, throw an error and continue.
             if (n == 1):
-                self.entryExists(subentry)
+                print "Entry already exists\n", subentry
                 rowid = results[0][0]
             elif (n == 0):
-                self.entryNotExists(subentry)
+                print "Entry does not exist, inserting...\n", subentry
                 
                 sql = "INSERT INTO " + self.config["ltype"] + " (" + self.config["lformat"] + ") VALUES (" + ",".join("?" * len(subentry)) + ");"
+                print sql, subentry
                 c.execute(sql, subentry)
                 
                 rowid = c.lastrowid
@@ -87,8 +91,24 @@ class Line:
             sql = "INSERT OR IGNORE INTO " + "lists" + " VALUES (" + ",".join("?"*4) + ");"
             c.execute(sql, (self.config["ltype"], rowid, self.config["listname"], self.config["level"]))
 
-    def entryExists(self, entry):
-        pass
-    
-    def entryNotExists(self, entry):
-        pass
+        
+conn = sqlite3.connect('test.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE IF NOT EXISTS vocab
+             (id INTEGER PRIMARY KEY,
+              r_ele TEXT,
+              k_ele TEXT,
+              meaning TEXT);''')
+c.execute('''CREATE TABLE IF NOT EXISTS lists
+            (type TEXT,
+             id INTEGER,
+             list TEXT,
+             level INTEGER);''')
+conn.commit()
+
+f = codecs.open("Genki_Elementary.list", 'r', encoding = "utf-8")
+thelist = List(f)
+thelist.parseFile()
+thelist.insertSql(c)
+conn.commit()
+c.close()

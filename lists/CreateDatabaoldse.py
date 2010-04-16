@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 import re
 import itertools
 import codecs
 import sqlite3
 import sys
 import os
+import random
+import Japanese
 
 class List:
     def __init__(self, file):
@@ -92,3 +95,33 @@ class Line:
     
     def entryNotExists(self, entry):
         pass
+    
+    
+def insertRandomScores(c, clanguage):
+    user = "Pietje"
+    for rt in clanguage.rehearse_types:
+        print rt.table, rt.scoretable
+        sql = "SELECT id FROM %s;" % (rt.table)
+        c.execute(sql)
+        results = [x[0] for x in c.fetchall()]
+        for id in results:
+            score1 = random.randint(0,30)
+            score2 = random.randint(0,30)
+            sql = "INSERT OR REPLACE INTO %s VALUES (?,?,?,?);" % rt.scoretable
+            c.execute(sql, (id, user, score1, score2))
+        
+clanguage = Japanese.Japanese()
+conn = sqlite3.connect(clanguage.database)
+c = conn.cursor()
+for query in clanguage.tables_sql:
+    c.execute(query)
+
+conn.commit()
+
+f = codecs.open("Genki_Elementary.list", 'r', encoding = "utf-8")
+thelist = List(f)
+thelist.parseFile()
+thelist.insertSql(c)
+insertRandomScores(c, clanguage)
+conn.commit()
+c.close()
