@@ -1,5 +1,7 @@
 
 JMdict.xml
+JMdict_pos.xml
+kanjidic2.xml
 .*project
 .settings/
 Thumbs.db
